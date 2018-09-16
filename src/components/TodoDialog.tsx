@@ -26,7 +26,7 @@ class TodoDialog extends React.Component<TodoDialog.Props> {
     }
 
     handleClose = () => {
-        this.props.actions.addTodo({ id: Math.random(), completed: false, text: this.state.newTodoText });
+        this.props.actions.addTodo({'todo': { id: Math.random(), completed: false, text: this.state.newTodoText }});
         this.props.onClose();
 
         // reset todo text if user reopens the dialog

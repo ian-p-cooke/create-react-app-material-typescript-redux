@@ -19,9 +19,9 @@ class TodoTable extends React.Component<TodoTable.Props> {
 
     onRowClick(todo: Todo) {
         if (todo.completed) {
-            this.props.actions.uncompleteTodo(todo.id);
+            this.props.actions.uncompleteTodo({ 'todoId': todo.id });
         } else {
-            this.props.actions.completeTodo(todo.id);
+            this.props.actions.completeTodoStarted({'todoId': todo.id });
         }
     }
 
@@ -44,9 +44,11 @@ class TodoTable extends React.Component<TodoTable.Props> {
                                 <TableRow
                                     key={n.id}
                                     hover
-                                    onClick={event => this.onRowClick(n)}
                                 >
-                                    <TableCell padding="dense">
+                                    <TableCell
+                                        padding="dense"
+                                        onClick={() => this.onRowClick(n)}
+                                    >
                                         <Checkbox checked={n.completed} />
                                     </TableCell>
                                     <TableCell padding="dense">{n.text}</TableCell>
@@ -54,7 +56,7 @@ class TodoTable extends React.Component<TodoTable.Props> {
                                         <IconButton
                                             aria-label="Delete"
                                             color="default"
-                                            onClick={() => this.props.actions.deleteTodo(n.id)}
+                                            onClick={() => this.props.actions.deleteTodo({ 'todoId': n.id })}
                                         >
                                             <DeleteIcon />
                                         </IconButton>

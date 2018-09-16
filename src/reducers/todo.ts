@@ -1,20 +1,26 @@
-import createReducer from './createReducer';
-import { Action, ActionType, Todo } from '../model/model';
+import { reducerWithInitialState } from 'typescript-fsa-reducers';
+import { Todo } from '../model/model';
+import { ActionCreators } from '../actions';
+import { TodoPayload, TodoIdPayload, CompleteTodoDonePayload } from '../actions/todo';
 
-export const todoList = createReducer([], {
-    [ActionType.ADD_TODO](state: Array<Todo>, action: Action<Todo>) {
-        return [...state, action.payload];
-    },
-    [ActionType.COMPLETE_TODO](state: Array<Todo>, action: Action<number>) {
-        // search after todo item with the given id and set completed to true
-        return state.map(t => t.id === action.payload ? { ...t, completed: true } : t);
-    },
-    [ActionType.UNCOMPLETE_TODO](state: Array<Todo>, action: Action<number>) {
-        // search after todo item with the given id and set completed to false
-        return state.map(t => t.id === action.payload ? { ...t, completed: false } : t);
-    },
-    [ActionType.DELETE_TODO](state: Array<Todo>, action: Action<number>) {
-        // remove all todos with the given id
-        return state.filter(t => t.id !== action.payload);
-    },
-});
+function addTodoHandler(state: Array<Todo>, payload: TodoPayload) {
+    return [...state, payload.todo ];
+}
+
+function completeTodoDoneHandler(state: Array<Todo>, payload: CompleteTodoDonePayload) {
+    return state.map(t => t.id === payload.result.todoId ? { ...t, completed: true } : t);
+}
+
+function uncompleteTodoHandler(state: Array<Todo>, payload: TodoIdPayload) {
+    return state.map(t => t.id === payload.todoId ? { ...t, completed: false } : t);
+}
+
+function deleteTodoHandler(state: Array<Todo>, payload: TodoIdPayload) {
+    return state.filter(t => t.id !== payload.todoId);
+}
+
+export const todoList = reducerWithInitialState<Array<Todo>>([])
+    .case(ActionCreators.addTodo, addTodoHandler)
+    .case(ActionCreators.completeTodo.done, completeTodoDoneHandler)
+    .case(ActionCreators.uncompleteTodo, uncompleteTodoHandler)
+    .case(ActionCreators.deleteTodo, deleteTodoHandler);

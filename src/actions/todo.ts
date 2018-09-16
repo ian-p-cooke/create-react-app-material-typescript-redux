@@ -1,36 +1,24 @@
-import { Action, ActionType, Todo } from '../model/model';
+import { Todo } from '../model/model';
+import actionCreatorFactory from 'typescript-fsa';
 
-export function addTodo(todo: Todo): Action<Todo> {
-
-    return {
-        type: ActionType.ADD_TODO,
-        payload: todo
-    };
+// These interfaces are also used in the reducer handlers
+export interface TodoPayload {
+    todo: Todo;
 }
 
-// Async Function expample with redux-thunk
-export function completeTodo(todoId: number) {
-
-    // here you could do API eg
-
-    return (dispatch: Function, getState: Function) => {
-
-        dispatch({ type: ActionType.COMPLETE_TODO, payload: todoId });
-    };
+export interface TodoIdPayload {
+    todoId: number;
 }
 
-export function uncompleteTodo(todoId: number): Action<number> {
-
-    return {
-        type: ActionType.UNCOMPLETE_TODO,
-        payload: todoId
-    };
+export interface CompleteTodoDonePayload {
+    params: TodoIdPayload;
+    result: TodoIdPayload;
 }
 
-export function deleteTodo(todoId: number): Action<number> {
+const actionCreator = actionCreatorFactory();
 
-    return {
-        type: ActionType.DELETE_TODO,
-        payload: todoId
-    };
-}
+export const addTodo = actionCreator<TodoPayload>('ADD_TODO');
+export const completeTodo = actionCreator.async<TodoIdPayload, TodoIdPayload>('COMPLETE_TODO');
+export const completeTodoStarted = completeTodo.started; // this is so redux.bindActions finds it automatically
+export const uncompleteTodo = actionCreator<TodoIdPayload>('UNCOMPLETE_TODO');
+export const deleteTodo = actionCreator<TodoIdPayload>('DELETE_TODO');

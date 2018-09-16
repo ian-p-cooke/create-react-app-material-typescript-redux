@@ -5,21 +5,26 @@ import {
     applyMiddleware,
     Store,
 } from 'redux';
-import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer, { RootState } from './reducers';
+import { createEpicMiddleware } from 'redux-observable';
+import rootEpic from './epics';
 
 const logger = (createLogger as any)();
 
-var middleware = applyMiddleware(logger, thunk);
+const epicMiddleware = createEpicMiddleware();
+
+let middleware = applyMiddleware(logger, epicMiddleware);
 
 if (process.env.NODE_ENV === 'development') {
     middleware = composeWithDevTools(middleware);
 }
 
 const store = createStore(rootReducer, {}, middleware) as Store<RootState>;
+
+epicMiddleware.run(rootEpic);
 
 class ReduxRoot extends React.Component {
 
