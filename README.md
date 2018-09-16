@@ -1,4 +1,4 @@
-# Create React App example with Material-UI, TypeScript, Redux and Routing
+# Create React App example with Material-UI, TypeScript, Redux, Routing, Typescript-FSA and Redux-Observable
 
 <img width="100%" src="screenshot.png" alt="example"/>
 
@@ -12,7 +12,8 @@ Inspired by:
 - [x] [Typescript](https://www.typescriptlang.org/)
 - [x] [React](https://facebook.github.io/react/)
 - [x] [Redux](https://github.com/reactjs/redux)
-- [x] [Redux-Thunk](https://github.com/gaearon/redux-thunk)
+- [x] [Redux-Observable](https://redux-observable.js.org/)
+- [x] [Typescript FSA](https://www.npmjs.com/package/typescript-fsa)
 - [x] [React Router](https://github.com/ReactTraining/react-router)
 - [x] [Redux DevTools Extension](https://github.com/zalmoxisus/redux-devtools-extension)
 - [x] [TodoMVC example](http://todomvc.com)
@@ -23,14 +24,14 @@ Inspired by:
 Download or clone this repo
 
 ```bash
-git clone https://github.com/innFactory/create-react-app-material-typescript-redux
+git clone https://github.com/ian-p-cooke/create-react-app-material-typescript-redux.git
 cd create-react-app-material-typescript-redux
 ```
 
 Install it and run:
 
 ```bash
-npm i
+npm install
 npm start
 ```
 
